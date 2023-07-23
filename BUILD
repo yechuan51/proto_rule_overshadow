@@ -20,7 +20,7 @@ py_binary(
     srcs_version = "PY3",
     deps = [
         # Comment out this line to make the issue go away.
-        # ":dummy_py_pb2",
+        ":dummy_py_pb2",
         "@pypi_kubernetes//:pkg",
         "@pypi_protobuf//:pkg",
     ],
