@@ -1,0 +1,32 @@
+diff --git a/python/private/proto/py_proto_library.bzl b/python/private/proto/py_proto_library.bzl
+index 9377c85..5310797 100644
+--- a/python/private/proto/py_proto_library.bzl
++++ b/python/private/proto/py_proto_library.bzl
+@@ -22,9 +22,6 @@ ProtoLangToolchainInfo = proto_common.ProtoLangToolchainInfo
+ _PyProtoInfo = provider(
+     doc = "Encapsulates information needed by the Python proto rules.",
+     fields = {
+-        "imports": """
+-            (depset[str]) The field forwarding PyInfo.imports coming from
+-            the proto language runtime dependency.""",
+         "runfiles_from_proto_deps": """
+             (depset[File]) Files from the transitive closure implicit proto
+             dependencies""",
+@@ -108,9 +105,6 @@ def _py_proto_aspect_impl(target, ctx):
+ 
+     return [
+         _PyProtoInfo(
+-            imports = depset(
+-                transitive = [dep[PyInfo].imports for dep in api_deps],
+-            ),
+             runfiles_from_proto_deps = runfiles_from_proto_deps,
+             transitive_sources = transitive_sources,
+         ),
+@@ -158,7 +152,6 @@ def _py_proto_library_rule(ctx):
+         ),
+         PyInfo(
+             transitive_sources = default_outputs,
+-            imports = depset(transitive = [info.imports for info in pyproto_infos]),
+             # Proto always produces 2- and 3- compatible source files
+             has_py2_only_sources = False,
+             has_py3_only_sources = False,
